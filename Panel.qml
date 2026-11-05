@@ -41,13 +41,51 @@ Panel {
   readonly property color fg: root.bar ? root.bar.foreground : Commons.Color.foreground
   readonly property color dim: Qt.darker(fg, 1.45)
   readonly property string fontFamily: root.bar ? root.bar.fontFamily : "JetBrainsMono Nerd Font"
-  Commons.Translations {
+  QtObject {
     id: strings
-    directory: Qt.resolvedUrl("i18n")
+    readonly property var dict: ({
+      "updates.title": "System Updates",
+      "updates.settingsTitle": "System Updates Settings",
+      "updates.updates": "Updates",
+      "updates.backToUpdates": "Back to updates",
+      "updates.save": "Save",
+      "updates.saveSettings": "Save settings",
+      "updates.refresh": "Refresh",
+      "updates.refreshStats": "Refresh updates",
+      "updates.savedToShell": "Saved to shell.json",
+      "updates.savedForSession": "Saved for this session",
+      "updates.keysHint": "s saves · esc closes",
+      "updates.upToDate": "System is up to date.",
+      "updates.update": "Update",
+      "updates.repo": "Repo",
+      "updates.refreshSection": "Refresh",
+      "updates.refreshInterval": "Check for updates every (seconds)",
+      "updates.refreshHelp": "How often the scanner checks for system updates.",
+      "updates.autoChecks": "Automatic checks",
+      "updates.autoChecksOn": "Checks run on the interval and once after startup",
+      "updates.autoChecksOff": "Checks run only when you open the panel or refresh",
+      "updates.visibility": "Visibility",
+      "updates.alwaysShow": "Always Show",
+      "updates.alwaysShowOn": "Icon visible even with no updates",
+      "updates.alwaysShowOff": "Icon hidden when no updates available",
+      "updates.oneUpdate": "%1 update available",
+      "updates.manyUpdates": "%1 updates available",
+      "updates.upToDateShort": "Up to date",
+      "updates.checking": "Checking…",
+      "updates.online": "Online",
+      "updates.offline": "Offline",
+      "updates.pkgs": "%1 pkgs",
+      "updates.checkedAgoSec": "Checked %1s ago",
+      "updates.checkedAgoMin": "Checked %1m ago",
+      "updates.checkedAgoHour": "Checked %1h ago"
+    })
+    function t(key) {
+      return dict[key] !== undefined ? dict[key] : key
+    }
   }
 
   function fmtInt(value) {
-    return Commons.I18n.formatNumber(Math.floor(Number(value) || 0))
+    return Math.floor(Number(value) || 0).toLocaleString()
   }
   // Only skip curl probes when NetworkManager definitively reports no
   // connectivity. Unknown/Portal/Limited must still attempt curl (ground
